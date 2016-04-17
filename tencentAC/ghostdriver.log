@@ -1,0 +1,13 @@
+[INFO  - 2016-04-17T21:41:21.334Z] GhostDriver - Main - running on port 63186
+[INFO  - 2016-04-17T21:41:22.008Z] Session [20766230-04e5-11e6-8145-5182c68f796f] - page.settings - {"XSSAuditingEnabled":false,"javascriptCanCloseWindows":true,"javascriptCanOpenWindows":true,"javascriptEnabled":true,"loadImages":false,"localToRemoteUrlAccessEnabled":false,"userAgent":"Mozilla/5.0 (Macintosh; Intel Mac OS X) AppleWebKit/538.1 (KHTML, like Gecko) PhantomJS/2.1.1 Safari/538.1","webSecurityEnabled":true}
+[INFO  - 2016-04-17T21:41:22.008Z] Session [20766230-04e5-11e6-8145-5182c68f796f] - page.customHeaders:  - {}
+[INFO  - 2016-04-17T21:41:22.008Z] Session [20766230-04e5-11e6-8145-5182c68f796f] - Session.negotiatedCapabilities - {"browserName":"phantomjs","version":"2.1.1","driverName":"ghostdriver","driverVersion":"1.2.0","platform":"mac-10.10 (Yosemite)-64bit","javascriptEnabled":true,"takesScreenshot":true,"handlesAlerts":false,"databaseEnabled":false,"locationContextEnabled":false,"applicationCacheEnabled":false,"browserConnectionEnabled":false,"cssSelectorsEnabled":true,"webStorageEnabled":false,"rotatable":false,"acceptSslCerts":false,"nativeEvents":true,"proxy":{"proxyType":"direct"}}
+[INFO  - 2016-04-17T21:41:22.008Z] SessionManagerReqHand - _postNewSessionCommand - New Session Created: 20766230-04e5-11e6-8145-5182c68f796f
+[ERROR - 2016-04-17T21:41:32.227Z] Session [20766230-04e5-11e6-8145-5182c68f796f] - page.onError - msg: TypeError: null is not an object (evaluating 'nowImg.nextSibling.nextSibling')
+
+  phantomjs://platform/console++.js:263 in error
+[ERROR - 2016-04-17T21:41:32.228Z] Session [20766230-04e5-11e6-8145-5182c68f796f] - page.onError - stack:
+  start (http://ac.gtimg.com/media/js/ac.page.chapter.view_v2.3.1.js?v=20151023:128)
+  onreadystatechange (http://ac.gtimg.com/media/js/ac.page.chapter.view_v2.3.1.js?v=20151023:5)
+
+  phantomjs://platform/console++.js:263 in error
