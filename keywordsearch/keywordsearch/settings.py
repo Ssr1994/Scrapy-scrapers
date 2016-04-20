@@ -14,6 +14,11 @@ BOT_NAME = 'keywordsearch'
 SPIDER_MODULES = ['keywordsearch.spiders']
 NEWSPIDER_MODULE = 'keywordsearch.spiders'
 
+DB_NAME = 'test'
+TABLE_NAME = 'search'
+DROP_TABLE = False
+QUERY = 'tesla'
+FILE_PATH = './webpages/' #path to store raw pages
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 #USER_AGENT = 'keywordsearch (+http://www.yourdomain.com)'
@@ -61,9 +66,9 @@ DOWNLOADER_MIDDLEWARES = {
 
 # Configure item pipelines
 # See http://scrapy.readthedocs.org/en/latest/topics/item-pipeline.html
-#ITEM_PIPELINES = {
-#    'keywordsearch.pipelines.SomePipeline': 300,
-#}
+ITEM_PIPELINES = {
+    'keywordsearch.pipelines.KeywordsearchPipeline': 300,
+}
 
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See http://doc.scrapy.org/en/latest/topics/autothrottle.html

@@ -10,7 +10,9 @@ class PhantomJSMiddleware(object):
             driver.get(request.url)
             if request.meta.has_key('target'):
                 if request.meta['target'] == 'wapost':
-                    driver.find_element_by_css_selector('div.pb-loadMore').click()
+                    btn = driver.find_element_by_css_selector('div.pb-loadMore')
+                    if btn.is_displayed():
+                        btn.click()
             time.sleep(3)
             content = driver.page_source.encode('utf-8')
             url = driver.current_url.encode('utf-8')

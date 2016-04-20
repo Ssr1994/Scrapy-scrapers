@@ -2,15 +2,15 @@
 import scrapy
 import urllib
 from keywordsearch.items import KeywordsearchItem
+from keywordsearch.settings import QUERY, FILE_PATH
 
 class WsjSpider(scrapy.Spider):
     name = "wsj"
-    allowed_domains = ["wsj.com", "google.com"]
+    allowed_domains = ["wsj.com"]
     basic_url = "http://www.wsj.com/search/term.html?KEYWORDS="
-    query = 'microsoft'
 
     def start_requests(self):
-        yield scrapy.Request(self.basic_url + urllib.quote(self.query), self.parse)
+        yield scrapy.Request(self.basic_url + urllib.quote(QUERY), self.parse)
     
     def parse(self, response):
         for url in response.xpath('//h3[@class="headline"]/a/@href').extract():
@@ -22,6 +22,7 @@ class WsjSpider(scrapy.Spider):
             header = response.xpath('//header[@class="post-header single-post-header"]')
             item['title'] = header.xpath('h1[@class="post-title h-main"]/text()').extract()
             item['time'] = header.xpath('small[@class="post-time"]/text()').extract()
+            item['keyLine'] = ''
             body = response.xpath('//div[@class="post-content"]')
             item['author'] = body.xpath('//li[@class="post-author"]/a/text()').extract()
             item['content'] = ' '.join(body.xpath('p/text()').extract())
@@ -33,7 +34,10 @@ class WsjSpider(scrapy.Spider):
             item['author'] = body.xpath('//span[@itemprop="name"]/text()').extract()
             item['time'] = body.xpath('//time[@class="timestamp"]/text()').extract()
             item['content'] = ' '.join(body.xpath('p/text()').extract())
+        item['title'] = item['title'][0].lstrip()
         item['url'] = response.url
-        item['publisher'] = 'Wall Street Journal'
-        item['query'] = self.query
+        item['publisher'] = 'WSJ'
+        item['query'] = QUERY
+        with open(FILE_PATH + item['title'] + '.html', 'w') as f:
+            f.write(response.body)
         yield item
