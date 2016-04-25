@@ -8,9 +8,10 @@ class WapostSpider(scrapy.Spider):
     name = "wapost"
     allowed_domains = ["washingtonpost.com"]
     basic_url = 'http://www.washingtonpost.com/newssearch/?query='
+    date_range = '7+Days'
 
     def start_requests(self):
-        yield scrapy.Request(self.basic_url + urllib.quote_plus(QUERY) + '&datefilter=7+Days', self.parse,
+        yield scrapy.Request(self.basic_url + urllib.quote_plus(QUERY) + '&datefilter=' + self.date_range, self.parse,
                              meta={"phantomjs": True, "target": 'wapost'})
     
     def parse(self, response):
@@ -19,13 +20,13 @@ class WapostSpider(scrapy.Spider):
     
     def parse_article(self, response):
         item = KeywordsearchItem()
-        item['title'] = response.xpath('//div[@id="article-topper"]/h1/text()').extract() #may have duplicates
+        item['title'] = response.xpath('//div[@id="article-topper"]//h1/text()').extract() #may have duplicates
         body = response.xpath('//div[@id="article-body"]')
         item['author'] = body.xpath('//span[@itemprop="name"]/text()').extract()
         item['time'] = body.xpath('//span[@itemprop="datePublished"]/text()').extract()
         item['publisher'] = 'WP'
         item['url'] = response.url
-        item['content'] = ' '.join(body.xpath('article[@itemprop="articleBody"]/p/text()').extract())
+        item['content'] = ' '.join(body.xpath('article[@itemprop="articleBody"]/p//text()').extract())
         item['query'] = QUERY
         item['keyLine'] = ''
         with open(FILE_PATH + ''.join(item['title']).lstrip() + '.html', 'w') as f:

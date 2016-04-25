@@ -17,11 +17,11 @@ NEWSPIDER_MODULE = 'keywordsearch.spiders'
 DB_NAME = 'test'
 TABLE_NAME = 'search'
 DROP_TABLE = False
-QUERY = 'tesla'
+QUERY = 'microsoft'
 FILE_PATH = './webpages/' #path to store raw pages
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
-#USER_AGENT = 'keywordsearch (+http://www.yourdomain.com)'
+USER_AGENT = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.86 Safari/537.36'
 
 # Configure maximum concurrent requests performed by Scrapy (default: 16)
 #CONCURRENT_REQUESTS=32
@@ -35,16 +35,16 @@ DOWNLOAD_DELAY=3
 #CONCURRENT_REQUESTS_PER_IP=16
 
 # Disable cookies (enabled by default)
-COOKIES_ENABLED=False
+#COOKIES_ENABLED=False
 
 # Disable Telnet Console (enabled by default)
 #TELNETCONSOLE_ENABLED=False
 
 # Override the default request headers:
-#DEFAULT_REQUEST_HEADERS = {
-#   'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
-#   'Accept-Language': 'en',
-#}
+DEFAULT_REQUEST_HEADERS = {
+   'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+   'Accept-Language': 'en,ja;q=0.8,zh-CN;q=0.6,zh;q=0.4,zh-TW;q=0.2',
+}
 
 # Enable or disable spider middlewares
 # See http://scrapy.readthedocs.org/en/latest/topics/spider-middleware.html
@@ -56,6 +56,8 @@ COOKIES_ENABLED=False
 # See http://scrapy.readthedocs.org/en/latest/topics/downloader-middleware.html
 DOWNLOADER_MIDDLEWARES = {
     'keywordsearch.middlewares.PhantomJSMiddleware': 1,
+    'keywordsearch.middlewares.MyRedirectMiddleware': 100,
+    'scrapy.downloadermiddlewares.redirect.RedirectMiddleware': 0,
 }
 
 # Enable or disable extensions
@@ -66,9 +68,9 @@ DOWNLOADER_MIDDLEWARES = {
 
 # Configure item pipelines
 # See http://scrapy.readthedocs.org/en/latest/topics/item-pipeline.html
-ITEM_PIPELINES = {
-    'keywordsearch.pipelines.KeywordsearchPipeline': 300,
-}
+#ITEM_PIPELINES = {
+#    'keywordsearch.pipelines.KeywordsearchPipeline': 300,
+#}
 
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See http://doc.scrapy.org/en/latest/topics/autothrottle.html

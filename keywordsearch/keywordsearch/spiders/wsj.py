@@ -25,7 +25,7 @@ class WsjSpider(scrapy.Spider):
             item['keyLine'] = ''
             body = response.xpath('//div[@class="post-content"]')
             item['author'] = body.xpath('//li[@class="post-author"]/a/text()').extract()
-            item['content'] = ' '.join(body.xpath('p/text()').extract())
+            item['content'] = ' '.join(body.xpath('p//text()').extract())
         else:
             header = response.xpath('//div[@class="wsj-article-headline-wrap "]')
             item['title'] = header.xpath('h1[@class="wsj-article-headline"]/text()').extract()
@@ -33,8 +33,8 @@ class WsjSpider(scrapy.Spider):
             body = response.xpath('//div[@id="wsj-article-wrap"]')
             item['author'] = body.xpath('//span[@itemprop="name"]/text()').extract()
             item['time'] = body.xpath('//time[@class="timestamp"]/text()').extract()
-            item['content'] = ' '.join(body.xpath('p/text()').extract())
-        item['title'] = item['title'][0].lstrip()
+            item['content'] = ' '.join(body.xpath('p//text()').extract())
+        item['title'] = ''.join(item['title']).lstrip()
         item['url'] = response.url
         item['publisher'] = 'WSJ'
         item['query'] = QUERY
