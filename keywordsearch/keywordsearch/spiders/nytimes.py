@@ -16,7 +16,6 @@ class NytimesSpider(scrapy.Spider):
             yield scrapy.Request(url + n, self.parse, dont_filter=True, meta={'phantomjs': True})
     
     def parse(self, response):
-        cnt = 0
         for url in response.xpath('//div[@id="searchResults"]//h3/a/@href').extract():
             yield scrapy.Request(response.urljoin(url), self.parse_article, meta={'target': 'nytimes'})
     
@@ -29,7 +28,7 @@ class NytimesSpider(scrapy.Spider):
         item['content'] = response.xpath('//div[@class="story-body"]/p//text()').extract()
         item['url'] = response.url
         item['publisher'] = 'NYTimes'
-        item['query'] = self.query
+        item['query'] = QUERY
         with open(FILE_PATH + item['title'] + '.html', 'w') as f:
             f.write(response.body)
         yield item

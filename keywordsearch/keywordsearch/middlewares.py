@@ -7,9 +7,7 @@ class PhantomJSMiddleware(object):
     
     def process_request(self, request, spider):
         if request.meta.get('phantomjs', False):
-            cap = webdriver.DesiredCapabilities.PHANTOMJS
-            cap['javascriptEnabled'] = False
-            driver = webdriver.PhantomJS(executable_path='phantomjs', service_args=['--load-images=no'], desired_capabilities=cap)
+            driver = webdriver.PhantomJS(executable_path='phantomjs', service_args=['--load-images=no'])
             driver.get(request.url)
             if request.meta.get('target', None) == 'wapost':
                 btn = driver.find_element_by_css_selector('div.pb-loadMore')
