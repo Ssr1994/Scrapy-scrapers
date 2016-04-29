@@ -33,7 +33,7 @@ class FoxnewsSpider(scrapy.Spider):
     def parse_article(self, response):
         # jQuery on fox's page returns duplicate pages
         item = KeywordsearchItem()
-        item['title'] = response.xpath('//div[@class="main"]//h1/text()').extract()
+        item['title'] = ''.join(response.xpath('//div[@class="main"]//h1/text()').extract()).lstrip()
         item['author'] = response.xpath('//div[@class="article-info"]//a/text()').extract()
         if not item['author']:
             item['author'] = response.xpath('//div[@class="article-info"]/div/div/text()').extract()
@@ -47,6 +47,6 @@ class FoxnewsSpider(scrapy.Spider):
             item['content'] = ' '.join(response.xpath('//div[@class="article-text"]/p//text()').extract())
         item['query'] = QUERY
         item['keyLine'] = response.meta['keyline']
-        with open(FILE_PATH + ''.join(item['title']).lstrip() + '.html', 'w') as f:
+        with open(FILE_PATH + item['title'] + '.html', 'w') as f:
             f.write(response.body)
         yield item

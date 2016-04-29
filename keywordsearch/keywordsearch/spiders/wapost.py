@@ -19,8 +19,9 @@ class WapostSpider(scrapy.Spider):
             yield scrapy.Request(response.urljoin(url), self.parse_article)
     
     def parse_article(self, response):
+        #may have duplicate articles under different topics
         item = KeywordsearchItem()
-        item['title'] = response.xpath('//div[@id="article-topper"]//h1/text()').extract() #may have duplicates
+        item['title'] = ''.join(response.xpath('//div[@id="article-topper"]//h1/text()').extract()).lstrip()
         body = response.xpath('//div[@id="article-body"]')
         item['author'] = body.xpath('//span[@itemprop="name"]/text()').extract()
         item['time'] = body.xpath('//span[@itemprop="datePublished"]/text()').extract()
@@ -29,6 +30,7 @@ class WapostSpider(scrapy.Spider):
         item['content'] = ' '.join(body.xpath('article[@itemprop="articleBody"]/p//text()').extract())
         item['query'] = QUERY
         item['keyLine'] = ''
-        with open(FILE_PATH + ''.join(item['title']).lstrip() + '.html', 'w') as f:
+        item['title'] = item['title']
+        with open(FILE_PATH + item['title'] + '.html', 'w') as f:
             f.write(response.body)
         yield item
