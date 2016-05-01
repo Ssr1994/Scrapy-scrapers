@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import scrapy
 import urllib
+import re
 from keywordsearch.items import KeywordsearchItem
 from keywordsearch.settings import QUERY, FILE_PATH
 
@@ -29,6 +30,7 @@ class NytimesSpider(scrapy.Spider):
         item['url'] = response.url
         item['publisher'] = 'NYTimes'
         item['query'] = QUERY
-        with open(FILE_PATH + item['title'] + '.html', 'w') as f:
+        item['keyLine'] = ''
+        with open(FILE_PATH + re.sub('[:/]', '', item['title']) + '.html', 'w') as f:
             f.write(response.body)
         yield item

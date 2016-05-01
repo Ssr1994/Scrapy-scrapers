@@ -16,14 +16,14 @@ class KeywordsearchPipeline(object):
             self.cur.execute('DROP TABLE IF EXISTS ' + TABLE_NAME)
         self.cur.execute('CREATE TABLE IF NOT EXISTS ' + TABLE_NAME +
                          '''(
-                         title varchar(150),
-                         author varchar(20),
-                         keyline varchar(240),
-                         time varchar(30),
-                         publisher varchar(10),
-                         url varchar(200),
-                         query varchar(40),
-                         content varchar(8000));''')
+                         title TEXT,
+                         author TEXT,
+                         keyline TEXT,
+                         time TEXT,
+                         publisher TEXT,
+                         url TEXT,
+                         query TEXT,
+                         content TEXT);''')
     
     def __del__(self):
         self.conn.close()

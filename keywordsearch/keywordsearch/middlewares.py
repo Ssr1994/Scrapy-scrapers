@@ -1,8 +1,4 @@
 from selenium import webdriver
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
-from selenium.common.exceptions import NoSuchElementException
 from scrapy.http import HtmlResponse
 from scrapy.downloadermiddlewares.redirect import RedirectMiddleware
 import time

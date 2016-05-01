@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import scrapy
 import urllib
+import re
 from keywordsearch.items import KeywordsearchItem
 from keywordsearch.settings import QUERY, FILE_PATH
 
@@ -30,7 +31,6 @@ class WapostSpider(scrapy.Spider):
         item['content'] = ' '.join(body.xpath('article[@itemprop="articleBody"]/p//text()').extract())
         item['query'] = QUERY
         item['keyLine'] = ''
-        item['title'] = item['title']
-        with open(FILE_PATH + item['title'] + '.html', 'w') as f:
+        with open(FILE_PATH + re.sub('[:/]', '', item['title']) + '.html', 'w') as f:
             f.write(response.body)
         yield item

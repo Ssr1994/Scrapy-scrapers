@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import scrapy
 import urllib
+import re
 from keywordsearch.items import KeywordsearchItem
 from keywordsearch.settings import QUERY, FILE_PATH
 
@@ -41,4 +42,7 @@ class CnnSpider(scrapy.Spider):
         item['url'] = response.url
         item['publisher'] = 'CNN'
         item['query'] = QUERY
+        item['title'] = ''.join(item['title'])
+        with open(FILE_PATH + re.sub('[:/]', '', item['title']) + '.html', 'w') as f:
+            f.write(response.body)
         yield item

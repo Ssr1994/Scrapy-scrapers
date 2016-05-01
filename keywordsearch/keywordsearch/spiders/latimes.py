@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import scrapy
 import urllib
+import re
 from datetime import date, timedelta
 from keywordsearch.items import KeywordsearchItem
 from keywordsearch.settings import QUERY, FILE_PATH
@@ -49,6 +50,6 @@ class LatimesSpider(scrapy.Spider):
         item['query'] = QUERY
         item['keyLine'] = ''
         item['title'] = ''.join(item['title']).lstrip().rstrip()
-        with open(FILE_PATH + item['title'] + '.html', 'w') as f:
+        with open(FILE_PATH + re.sub('[:/]', '', item['title']) + '.html', 'w') as f:
             f.write(response.body)
         yield item

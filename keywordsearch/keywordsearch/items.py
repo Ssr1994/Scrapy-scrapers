@@ -7,7 +7,6 @@
 
 import scrapy
 
-
 class KeywordsearchItem(scrapy.Item):
     title = scrapy.Field()
     author = scrapy.Field()

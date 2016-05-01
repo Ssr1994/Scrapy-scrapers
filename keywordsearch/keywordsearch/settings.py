@@ -14,7 +14,7 @@ BOT_NAME = 'keywordsearch'
 SPIDER_MODULES = ['keywordsearch.spiders']
 NEWSPIDER_MODULE = 'keywordsearch.spiders'
 
-DB_NAME = 'test'
+DB_NAME = 'keywordsearch'
 TABLE_NAME = 'search'
 DROP_TABLE = False
 QUERY = 'microsoft'
@@ -68,9 +68,9 @@ DOWNLOADER_MIDDLEWARES = {
 
 # Configure item pipelines
 # See http://scrapy.readthedocs.org/en/latest/topics/item-pipeline.html
-#ITEM_PIPELINES = {
-#    'keywordsearch.pipelines.KeywordsearchPipeline': 300,
-#}
+ITEM_PIPELINES = {
+    'keywordsearch.pipelines.KeywordsearchPipeline': 300,
+}
 
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See http://doc.scrapy.org/en/latest/topics/autothrottle.html

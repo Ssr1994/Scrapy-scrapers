@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import scrapy
 import urllib
+import re
 from keywordsearch.items import KeywordsearchItem
 from keywordsearch.settings import QUERY, FILE_PATH
 
@@ -38,6 +39,6 @@ class WsjSpider(scrapy.Spider):
         item['url'] = response.url
         item['publisher'] = 'WSJ'
         item['query'] = QUERY
-        with open(FILE_PATH + item['title'] + '.html', 'w') as f:
+        with open(FILE_PATH + re.sub('[:/]', '', item['title']) + '.html', 'w') as f:
             f.write(response.body)
         yield item
